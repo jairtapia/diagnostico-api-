@@ -1,3 +1,3 @@
-web: uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}
+web: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}
 
-release: python create-tables.py
+release: ./init.sh
