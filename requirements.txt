@@ -6,3 +6,4 @@ pymysql
 python-dotenv
 cryptography
 passlib
+pydantic[email]
