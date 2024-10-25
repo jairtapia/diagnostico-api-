@@ -15,7 +15,6 @@ class User(Base):
     last_name_m = Column(String(30), nullable=True)
     telefono = Column(String(10), nullable=False)  
     user_type = Column(SmallInteger, ForeignKey("UserType.user_type_id"), nullable=False)
-    crd_id = Column(SmallInteger, ForeignKey("Credentials.credential_id", ondelete="CASCADE"), nullable=False) 
 
 class Credentials(Base):
     __tablename__ = 'Credentials'

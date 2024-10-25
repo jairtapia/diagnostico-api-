@@ -64,7 +64,7 @@ def save_data(user:UserValidator,db: Session = Depends(get_db)):
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-@router.post("/Loggin",response_model=UserValidator)
+@router.post("/Login",response_model=UserValidator)
 def verify_user(credentials:CredentialsValidator, db: Session = Depends(get_db)):
     try:
         # Buscar las credenciales en la base de datos por email

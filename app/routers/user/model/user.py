@@ -9,7 +9,6 @@ class UserValidator(BaseModel):
     last_name_m: str 
     telefono: str
     user_type: int
-    crd_id: int
 
     class Config:
         orm_mode = True

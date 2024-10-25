@@ -80,5 +80,5 @@ if __name__ == '__main__':
         crd_id=1
     )
     #editUser(1,user_newData)
-    #deleteUser(1)
+    deleteUser(1)
 

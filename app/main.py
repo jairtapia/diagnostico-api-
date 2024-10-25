@@ -13,10 +13,11 @@ no me ignores >:)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 importante pasos para que todo funcione de forma local
 primero 
+mentira primero las dependencias
 crear la base de datos con el nombre que quieras
 segundo
 crea un archivo .env en la carpeta db de preferencia con los nombres de variables 
-MYSQLUSER=[tu usuario]
+MYSQLUSER=[tu usuario]Ñ
 MYSQLHOST=[localhost]
 MYSQL_ROOT_PASSWORD=[tu contrasña]
 MYSQL_DATABASE=[nombre de la base de datos]
