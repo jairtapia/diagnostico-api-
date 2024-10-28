@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from app.db.database import get_db
 from app.routers.user.model.user import UserValidator, CredentialsValidator
-from app.db.schemas.user import User, Credentials
+from app.db.schemas.user import User, Credentials,UserType
 '''
 para crear una nueva ruta
 importamos el modelo de la respuesta que es la clase de pydantic
@@ -151,4 +151,18 @@ def deleteUser(id:int, db:Session = Depends(get_db)):
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error al eliminar el usuario") from e
+    
+@router.get('/users')
+def GetUsers(db:Session = Depends(get_db)):
+    users = db.query(User,UserType.user_type_name).join(UserType).all()
+    users_list = [{
+        'id': user.user_id,
+        'nombre': user.user_name,
+        'apellido': user.last_name_f,
+        'apellido m': user.last_name_m,
+        'telefono':user.telefono,
+        'rol': user_type_name
+    } for user,user_type_name  in users]
+    return users_list
+
 
