@@ -66,9 +66,8 @@ if __name__ == '__main__':
         last_name_m="gomez",
         telefono="23453245",
         user_type=1,
-        crd_id=1
     )
-    #crearUser(user_credentials,user_data)
+    crearUser(user_credentials,user_data)
     #searchUser(1)
     #searchByName('juan') 
     user_newData = UserValidator(
@@ -77,8 +76,7 @@ if __name__ == '__main__':
         last_name_m="martinez",
         telefono="65763442",
         user_type=1,
-        crd_id=1
     )
     #editUser(1,user_newData)
-    deleteUser(1)
+    #deleteUser()
 

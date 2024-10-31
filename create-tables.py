@@ -2,6 +2,7 @@
 #ejemplo
 # >>> from app.routers.users.schema.userDb import User, UserType
 from app.db.schemas.user import User, UserType, Credentials
+from app.db.schemas.patient import Patient
 from app.db.database import engine, Base
 
 
