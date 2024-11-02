@@ -7,6 +7,7 @@ class UserType(Base):
     user_type_id = Column(SmallInteger, primary_key=True, index=True)
     user_type_name = Column(String(50), nullable=False)
 
+
 class User(Base):
     __tablename__ = 'User'
     user_id = Column(SmallInteger, primary_key=True, index=True)
@@ -16,8 +17,11 @@ class User(Base):
     telefono = Column(String(10), nullable=False)  
     user_type = Column(SmallInteger, ForeignKey("UserType.user_type_id"), nullable=False)
 
+
+
 class Credentials(Base):
     __tablename__ = 'Credentials'
     credential_id = Column(SmallInteger, primary_key=True, index=True)
     email = Column(String(30), nullable=False)
     password = Column(String(128), nullable=False)
+

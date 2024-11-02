@@ -42,7 +42,7 @@ def save_credentials(credentials:CredentialsValidator,db: Session = Depends(get_
     except Exception as e:
         # Si hay un error, lanzamos una excepción o manejamos el error como prefieras
         db.rollback()
-        raise HTTPException(status_code=400, detail="Error al guardar las credenciales")
+        raise HTTPException(status_code=400, detail=f"Error al guardar las credenciales: {str(e)}")
     return {'status': status, 'credentials': credentials_db}
 
 @router.post("/Signin/data")

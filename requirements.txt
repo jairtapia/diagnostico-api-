@@ -5,5 +5,6 @@ pydantic
 pymysql
 python-dotenv
 cryptography
-passlib
+passlib==1.7.4
 pydantic[email]
+bcrypt==3.2.0
