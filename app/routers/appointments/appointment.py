@@ -8,6 +8,7 @@ from app.db.schemas.appointment import Appointment, ClinicRoom, ClinicRoomSchedu
 from app.routers.appointments.model.appointmentDto import AppointmentDto
 from typing import List,Optional
 from datetime import datetime,time
+from fastapi.encoders import jsonable_encoder
 
 
 router = APIRouter()
@@ -19,12 +20,47 @@ def readAppointments(db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="No se encontraron citas para este doctor.")
     return appointments
 
-@router.get("/appointments/{id}", response_model=List[AppointmentDto])
+@router.get("/appointments/{doctor_id}")
 def readAppointmentsByDoctor(doctor_id: int, db: Session = Depends(get_db)):
-    appointments = db.query(Appointment).filter(Appointment.doctor_id == doctor_id).all()
+    # Consulta Appointment y el atributo name del paciente
+    appointments = (
+        db.query(Appointment, 
+                 Patient.name,
+                 Patient.last_name_f,
+                 Patient.last_name_m,
+                 Patient.state,
+                 ClinicRoom.numero)
+        .join(Patient)
+        .join(ClinicRoom)
+        .filter(Appointment.doctor_id == doctor_id)
+        .all()
+    )
+
     if not appointments:
         raise HTTPException(status_code=404, detail="No se encontraron citas para este doctor.")
-    return appointments
+    
+    # Construimos el resultado usando el nombre del paciente y número de la sala
+    result = []
+    for appointment, patient_name,last_name_f,last_name_m,state, clinic_room_numero in appointments:
+        result.append({
+            "id": appointment.id,
+            "date": appointment.date.isoformat(),
+            "time": appointment.time,
+            "doctor_id": appointment.doctor_id,
+            "patient_id": appointment.patient_id,
+            "clinic_room_id": appointment.clinic_room_id,
+            "patient": {
+                "name": patient_name,
+                "seconname":last_name_f,
+                "lastname":last_name_m,
+                "state":state,
+            },
+            "clinic_room": {
+                "numero": clinic_room_numero
+            }
+        })
+
+    return result
 
 @router.post("/appointments/create")
 def createAppointment(appointment: AppointmentDto, db: Session = Depends(get_db)):
