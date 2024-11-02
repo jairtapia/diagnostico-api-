@@ -165,4 +165,15 @@ def GetUsers(db:Session = Depends(get_db)):
     } for user,user_type_name  in users]
     return users_list
 
+@router.get('/users/type/{user_type_id}')
+def getUsersByType(user_type_id: int, db: Session = Depends(get_db)):
+    try:
+        users = db.query(User).join(UserType).filter(UserType.user_type_id == user_type_id).all()
+        if not users:
+            return {"message": "No se encontraron usuarios para este tipo."}
+        return users
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Error al obtener los usuarios por tipo") from e
+
+
 
