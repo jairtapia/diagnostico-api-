@@ -64,8 +64,6 @@ def readAppointmentsByDoctor(doctor_id: int, db: Session = Depends(get_db)):
 
 @router.post("/appointments/create")
 def createAppointment(appointment: AppointmentDto, db: Session = Depends(get_db)):
-        # Verificar disponibilidad antes de crear la cita
-        # Verificar si ya existe una cita en el mismo horario
         cita_existente = db.query(Appointment).filter(
             Appointment.date == appointment.date,
             Appointment.time == appointment.time,

@@ -4,6 +4,9 @@
 from app.db.schemas.user import User, UserType, Credentials
 from app.db.schemas.patient import Patient
 from app.db.schemas.appointment import ClinicRoom,ClinicRoomSchedule,Appointment
+from app.db.schemas.Disease import Disease, DiseaseDetail
+from app.db.schemas.Sign import Sign, SignDisease
+from app.db.schemas.Symptom import Symptom, SymptomDisease
 from app.db.database import engine, Base
 
 
@@ -18,4 +21,9 @@ if __name__ == "__main__":
     ClinicRoom.__table__.create(bind=engine)
     ClinicRoomSchedule.__table__.create(bind=engine)
     Appointment.__table__.create(bind=engine)
+    Sign.__table__.create(bind=engine)
+    Symptom.__table__.create(bind=engine)
+    Disease.__table__.create(bind=engine)
+    SignDisease.__table__.create(bind=engine)
+    SymptomDisease.__table__.create(bind=engine)
     print("Tablas creadas exitosamente.")

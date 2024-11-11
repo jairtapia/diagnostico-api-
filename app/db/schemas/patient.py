@@ -2,9 +2,6 @@ from sqlalchemy import Column, SmallInteger, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.database import Base
 
-
-
-
 class Patient(Base):
     __tablename__='Patient'
     patient_id = Column(SmallInteger, primary_key=True, index=True, autoincrement=True)

@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from app.routers.user import user
 from app.routers.Patients import patients
 from app.routers.appointments import appointment
+from app.routers.Disease import disease
+from app.routers.Signs import signs
+from app.routers.Symptoms import symptoms
 '''
 importamos las rutas
 ejemplo
@@ -50,6 +53,9 @@ app.include_router(user.router)
 app.include_router(user.router)
 app.include_router(patients.router)
 app.include_router(appointment.router)
+app.include_router(signs.router)
+app.include_router(symptoms.router)
+app.include_router(disease.router)
 
 
 
