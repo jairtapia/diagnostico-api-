@@ -40,13 +40,15 @@ def Find(id:int, db:Session = Depends(get_db)):
 
 @router.put("/disease/edit/{id}")
 def Edit(id:int, disease:DiseaseDto, db:Session = Depends(get_db)):
+    enfermedad = db.query(Disease).filter(Disease.id == id).first()
+    if enfermedad is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Enfermedad no encontrada")
+    
+    disease_dict = disease.dict(exclude_unset=True) 
+    for key, value in disease_dict.items():
+        setattr(enfermedad, key, value)
+    
     try:
-        enfermedad = db.query(Disease).filter(Disease.id == id).first()
-        if enfermedad is None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Enfermedad no encontrada")
-        disease_dict = disease.dict(exclude_unset=True) 
-        for key, value in disease_dict.items():
-            setattr(enfermedad, key, value)
         db.commit()
         db.refresh(enfermedad)
         return enfermedad
@@ -110,3 +112,25 @@ def CreateListSigns(id: int, list: List[int], db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail="Error al insertar los síntomas") from e
+    
+@router.delete('/disease/delete/signs/{id}')
+def DeleteSignlist(id:int, db:Session = Depends(get_db)):
+    try:
+        result = db.query(SignDisease).filter(SignDisease.disease_id == id).delete()
+        db.commit()
+        if result == 0:
+            raise HTTPException(status_code=404, detail="No se encontraron signos para eliminar")
+        return {"message": "Signos eliminados con éxito"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Error al eliminar los signos") from e
+
+@router.delete('/disease/delete/symptoms/{id}')
+def DeleteSymptoms(id:int, db:Session = Depends(get_db)):
+    try:
+        db.query(SymptomDisease).filter(SymptomDisease.disease_id == id).delete()
+        db.commit()
+        return {"message": "Síntomas eliminados con éxito"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Error al eliminar los síntomas") from e
