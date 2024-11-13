@@ -59,14 +59,15 @@ def Edit(id:int, disease:DiseaseDto, db:Session = Depends(get_db)):
 @router.delete("/disease/delete/{id}")
 def delete_disease(id: int, db: Session = Depends(get_db)):
     try:
-        db_Disease = db.query(Disease).filter(Disease.id == id).first()
-        if db_Disease is None:
-            raise HTTPException(status_code=404, detail="Signo no encontrado")
-        db.delete(db_Disease)
+        db_disease = db.query(Disease).filter(Disease.id == id).first()
+        if db_disease is None:
+            raise HTTPException(status_code=404, detail="Enfermedad no encontrada")
+        db.delete(db_disease)
         db.commit()
-        return {"message": "Disease eliminado con éxito"}
+        return {"message": "Enfermedad eliminada con éxito"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Error al eliminar el signo") from e
+        db.rollback()  # Aseguramos que se haga rollback en caso de error
+        raise HTTPException(status_code=500, detail="Error al eliminar la enfermedad") from e
     
 
 @router.get('/disease/symptoms/{id}')
@@ -102,16 +103,16 @@ def obtener_signos(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Error al obtener los síntomas") from e
     
 @router.post('/disease/create/signs/{id}')
-def CreateListSigns(id: int, list: List[int], db: Session = Depends(get_db)):
+def CreateListSigns(id: int, signs:List[int], db: Session = Depends(get_db)):
     try:
-        for sign_id in list:
+        for sign_id in signs:
             new_entry = SignDisease(disease_id=id, sign_id=sign_id)
             db.add(new_entry)
         db.commit()
-        return {"message": "signos insertados con éxito"}
+        return {"message": "Signos insertados con éxito"}
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail="Error al insertar los síntomas") from e
+        raise HTTPException(status_code=500, detail="Error al insertar los signos") from e
     
 @router.delete('/disease/delete/signs/{id}')
 def DeleteSignlist(id:int, db:Session = Depends(get_db)):
