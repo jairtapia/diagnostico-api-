@@ -1,4 +1,4 @@
-from sqlalchemy import Column, SmallInteger, String, ForeignKey
+from sqlalchemy import Column, SmallInteger, String, ForeignKey,Date
 from app.db.database import Base
 
 class Diagnostic(Base):
@@ -7,6 +7,7 @@ class Diagnostic(Base):
     medico =  Column(SmallInteger, ForeignKey('User.user_id'), nullable=False)
     paciente =  Column(SmallInteger, ForeignKey('Patient.patient_id'), nullable=False)
     descripcion = Column(String(255), nullable=False)
+    fecha = Column(Date, nullable=False)
     receta = Column(String(255), nullable=True)
     enfermedad = Column(SmallInteger, ForeignKey('Disease.id'), nullable=False)
     estado = Column(String(255), nullable=False)

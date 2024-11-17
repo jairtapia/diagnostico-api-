@@ -5,6 +5,7 @@ from app.routers.appointments import appointment
 from app.routers.Disease import disease
 from app.routers.Signs import signs
 from app.routers.Symptoms import symptoms
+from app.routers.Diagnostico import Diagnostico
 '''
 importamos las rutas
 ejemplo
@@ -56,6 +57,7 @@ app.include_router(appointment.router)
 app.include_router(signs.router)
 app.include_router(symptoms.router)
 app.include_router(disease.router)
+app.include_router(Diagnostico.router)
 
 
 

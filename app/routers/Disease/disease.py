@@ -38,6 +38,13 @@ def Find(id:int, db:Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Enfermedad no encontrada")
     return enfermedad
 
+@router.get("/disease/find/{name}")
+def Find(name:str, db:Session = Depends(get_db)):
+    enfermedad = db.query(Disease).filter(Disease.name == name).first()
+    if enfermedad is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Enfermedad no encontrada")
+    return enfermedad
+
 @router.put("/disease/edit/{id}")
 def Edit(id:int, disease:DiseaseDto, db:Session = Depends(get_db)):
     enfermedad = db.query(Disease).filter(Disease.id == id).first()

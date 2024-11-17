@@ -7,7 +7,7 @@ from app.db.schemas.appointment import ClinicRoom,ClinicRoomSchedule,Appointment
 from app.db.schemas.Disease import Disease
 from app.db.schemas.Sign import Sign, SignDisease
 from app.db.schemas.Symptom import Symptom, SymptomDisease
-from app.db.schemas.DiesaseTest import DiseaseTest,TestsDiseases
+from app.db.schemas.DiesaseTest import Test,TestsDiseases
 from app.db.schemas.Diagnostic import Diagnostic,PatientDiagnostic
 from app.db.schemas.PostMorten import Postmorten
 from app.db.database import engine, Base
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     Disease.__table__.create(bind=engine)
     SignDisease.__table__.create(bind=engine)
     SymptomDisease.__table__.create(bind=engine)
-    DiseaseTest.__table__.create(bind=engine)
+    Test.__table__.create(bind=engine)
     TestsDiseases.__table__.create(bind=engine)
     Diagnostic.__table__.create(bind=engine)
     PatientDiagnostic.__table__.create(bind=engine)
