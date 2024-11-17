@@ -7,6 +7,7 @@ from app.db.schemas.Symptom import SymptomDisease, Symptom
 from app.db.schemas.Sign import SignDisease, Sign
 from app.routers.Disease.model.DiseaseDto import DiseaseDto
 from app.routers.Symptoms.model.SymptomDto import SymptomDto
+from app.db.schemas.DiesaseTest import TestsDiseases,Test
 from typing import List
 
 router = APIRouter()
@@ -142,3 +143,16 @@ def DeleteSymptoms(id:int, db:Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail="Error al eliminar los síntomas") from e
+@router.get('/disease/test/all')
+def get(db:Session = Depends(get_db)):
+    result = db.query(Test).all()
+    result_dict = [{"id":test.id,
+                    "name":test.nombre_prueba} for test in result]
+    return result_dict
+
+@router.get('/disease/test/{id}')
+def getTestDisease(id:int,db:Session = Depends(get_db)):
+    result = db.query(Test).join(TestsDiseases).filter(TestsDiseases.id_disease == id).all()
+    result_dict = [{"id":test.id,
+                    "name":test.nombre_prueba} for test in result]
+    return result_dict
