@@ -156,3 +156,14 @@ def getTestDisease(id:int,db:Session = Depends(get_db)):
     result_dict = [{"id":test.id,
                     "name":test.nombre_prueba} for test in result]
     return result_dict
+
+@router.get('/createModel')
+def CreateModel(db:Session = Depends(get_db)):
+    lista = db.query(Disease).join(SymptomDisease ,SymptomDisease.disease_id == Disease.id).join(SignDisease,SignDisease.disease_id == Disease.id).filter(SymptomDisease.disease_id == Disease.id, SignDisease.disease_id == Disease.id).all()
+    List = [{"nombre":Disease.name,
+             "sintomas":[item.name for item in (Disease.sintomas + Disease.signos)]
+             } for Disease in lista]   
+    return List
+
+
+    #SymptomDisease  ,, SignDisease

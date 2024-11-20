@@ -7,6 +7,8 @@ class Disease(Base):
     id = Column(SmallInteger, primary_key=True, index=True, autoincrement=True)
     name = Column(String(30), nullable=False)
     peligro = Column(SmallInteger, nullable=True)
+    sintomas = relationship('Symptom', secondary='SymptomDisease', backref='diseases')
+    signos = relationship('Sign', secondary='sign_disease', backref='diseases')
 
 
 class DiseaseDetail(Base):
